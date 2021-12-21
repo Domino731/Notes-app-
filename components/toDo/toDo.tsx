@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
   TextInput,
   Button,
   TouchableOpacity,
-  Text
+  Text,
 } from "react-native";
 
 export const ToDo: FunctionComponent = () => {
@@ -15,15 +15,23 @@ export const ToDo: FunctionComponent = () => {
 
   const [flag, setFlag] = useState<boolean>(false);
 
-  const handleAddTask = () => {
-    setData((prev) => [...prev, taskText]);
-    return setTaskText("");
-  };
+  // checking if the new task text length is greater than 0
+  useEffect(() => {
+    return  taskText.length > 0 ? setFlag(true) : setFlag(false);
+  }, [taskText]);
 
-  const handleSetTaskText = (data: string) => {
-    data.length > 0 ? setFlag(true) : setFlag(false) ;
+  /** add new task to the data state and clear taskText state */
+  const handleAddTask = useCallback(() => {
+    console.log(taskText)
+        setData((prev) => [...prev, taskText]);
+    return setTaskText("");
+  }, [])
+
+  /** change taskText state*/
+  const handleSetTaskText = useCallback((data: string) => {
     return setTaskText(data);
-  }
+  }, []);
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -32,9 +40,11 @@ export const ToDo: FunctionComponent = () => {
         onChangeText={handleSetTaskText}
         value={taskText}
       />
-      {flag && <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Add new task</Text>
-      </TouchableOpacity>}
+      {flag && (
+        <TouchableOpacity style={styles.button} onPress={handleAddTask}>
+          <Text style={styles.buttonText}>Add new task</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -53,16 +63,16 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 12,
-    width: '100%',
+    width: "100%",
     paddingTop: 6,
     paddingBottom: 6,
-    backgroundColor: '#f72585',
+    backgroundColor: "#f72585",
     borderRadius: 8,
   },
   buttonText: {
     fontSize: 20,
-    textAlign: 'center',
-    color: '#fff',
-    fontWeight: 'bold',
-  }
+    textAlign: "center",
+    color: "#fff",
+    fontWeight: "bold",
+  },
 });
