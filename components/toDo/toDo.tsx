@@ -5,13 +5,21 @@ export const ToDo : FunctionComponent = () => {
 
   const [data, setData] = useState<string[]>([]);
 
+  const [taskText, setTaskText] = useState<string>('');
+
+
+  
   const handleAddTask = () => {
-    setData([])
+    setData( prev => [...prev, taskText]);
+    return setTaskText('');
   }
+  
  return <View style={styles.container}> 
     <TextInput
         style={styles.input}
         defaultValue="You can type in me"
+        onChangeText={setTaskText}
+        value={taskText}
       />
       <Button
   onPress={handleAddTask}
