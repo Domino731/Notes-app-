@@ -22,22 +22,19 @@ export const ToDo: FunctionComponent = () => {
 
   /** add new task to the data state and clear taskText state */
   const handleAddTask = useCallback(() => {
-    console.log(taskText)
-        setData((prev) => [...prev, taskText]);
-    return setTaskText("");
-  }, [])
 
-  /** change taskText state*/
-  const handleSetTaskText = useCallback((data: string) => {
-    return setTaskText(data);
-  }, []);
+        setData((prev) => [...prev, taskText]);
+       return setTaskText('');
+  }, [taskText]);
+
 
   return (
     <View style={styles.container}>
+      <Text>{taskText}</Text>
       <TextInput
         style={styles.input}
         defaultValue="You can type in me"
-        onChangeText={handleSetTaskText}
+        onChangeText={setTaskText}
         value={taskText}
       />
       {flag && (
@@ -45,7 +42,18 @@ export const ToDo: FunctionComponent = () => {
           <Text style={styles.buttonText}>Add new task</Text>
         </TouchableOpacity>
       )}
+
+      <View style={styles.tasksList}>
+               {data.map((data, index) => <View key={index}>
+                <TouchableOpacity>
+                   <Text>Add new task</Text>
+                </TouchableOpacity>
+                 <Text style={styles.listItem}>{data}</Text>
+               </View>)}
+      </View>
     </View>
+
+
   );
 };
 
@@ -75,4 +83,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  tasksList: {
+    marginTop: 10
+  },
+  listItem: {
+     color: '#fff'
+  }
 });
