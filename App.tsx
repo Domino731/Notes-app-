@@ -1,15 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, SafeAreaView, Platform, Image, TouchableWithoutFeedback } from 'react-native';
+import { ToDo } from './components/toDo/toDo';
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title} numberOfLines={2}> Merry xmas </Text>
-
-      <TouchableWithoutFeedback onPress={() => console.log('Santa :)')}>
-         <Image style={styles.image} source={require('./assets/santa-claus.png')}/>
-        </TouchableWithoutFeedback>  
-    
+      <ToDo/>
+  
     </SafeAreaView >
   );
 }
@@ -17,14 +14,12 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
+    paddingLeft: 10,
+    paddingRight: 10,
     flex: 1,
-    color: '#fff',
+    color: '#3b3b3b',
     backgroundColor: 'dodgerblue',
     paddingTop: Platform.OS === 'android' ? 25 : 0,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center'
   },
   title: {
     textAlign: 'center',
@@ -33,5 +28,6 @@ const styles = StyleSheet.create({
   image: {
        width: '50%',
      resizeMode: 'contain'
+     
   }
 });
